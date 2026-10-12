@@ -30,14 +30,26 @@ public class Ticket {
     }
 
     public void startProcessing() {
+        if (!status.equals("NEW")) {
+            System.out.println("Ошибка: в работу можно взять только новую заявку");
+            return;
+        }
         status = "IN_PROGRESS";
     }
 
     public void resolve() {
+        if (!status.equals("IN_PROGRESS")) {
+            System.out.println("Ошибка: решить можно только заявку в работе");
+            return;
+        }
         status = "RESOLVED";
     }
 
     public void close() {
+        if (!status.equals("RESOLVED")) {
+            System.out.println("Ошибка: сначала заявку нужно решить, потом закрыть");
+            return;
+        }
         status = "CLOSED";
     }
 }

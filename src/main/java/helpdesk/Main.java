@@ -10,6 +10,8 @@ public class Main {
         System.out.println("Заявка: " + ticket.getTitle());
         System.out.println("Статус: " + ticket.getStatus());
 
+        ticket.close();
+
         ticket.startProcessing();
         System.out.println("Статус: " + ticket.getStatus());
         ticket.resolve();
