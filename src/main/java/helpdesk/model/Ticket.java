@@ -52,4 +52,9 @@ public class Ticket {
         }
         status = TicketStatus.CLOSED;
     }
+
+    @Override
+    public String toString() {
+        return "#" + id + " " + title + " | " + status;
+    }
 }
