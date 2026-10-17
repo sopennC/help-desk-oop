@@ -39,8 +39,8 @@ public class Ticket {
     }
 
     public void startProcessing() {
-        if (status != TicketStatus.NEW) {
-            System.out.println("Ошибка: в работу можно взять только новую заявку");
+        if (status != TicketStatus.NEW && status != TicketStatus.REOPENED) {
+            System.out.println("Ошибка: в работу можно взять только новую или переоткрытую заявку");
             return;
         }
         status = TicketStatus.IN_PROGRESS;
@@ -68,6 +68,14 @@ public class Ticket {
             return;
         }
         status = TicketStatus.CANCELLED;
+    }
+
+    public void reopen() {
+        if (status != TicketStatus.RESOLVED && status != TicketStatus.CLOSED) {
+            System.out.println("Ошибка: открыть повторно можно только решённую или закрытую заявку");
+            return;
+        }
+        status = TicketStatus.REOPENED;
     }
 
     @Override

@@ -30,4 +30,11 @@ public class TicketService {
             notificationService.send("Заявка №" + ticket.getId() + " закрыта");
         }
     }
+
+    public void reopenTicket(Ticket ticket) {
+        ticket.reopen();
+        if (ticket.getStatus() == TicketStatus.REOPENED) {
+            notificationService.send("Заявка №" + ticket.getId() + " открыта повторно");
+        }
+    }
 }

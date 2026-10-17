@@ -2,6 +2,7 @@ package helpdesk;
 
 import helpdesk.model.Administrator;
 import helpdesk.model.Customer;
+import helpdesk.model.SeniorSupportAgent;
 import helpdesk.model.SupportAgent;
 import helpdesk.model.Ticket;
 import helpdesk.model.TicketPriority;
@@ -61,10 +62,18 @@ public class Main {
         }
 
         System.out.println();
+        ticketService.reopenTicket(wifiTicket);
+        System.out.println("Статус: " + wifiTicket.getStatus());
+        ticketService.startTicket(wifiTicket);
+        System.out.println("Статус: " + wifiTicket.getStatus());
+        projectorTicket.reopen();
+
+        System.out.println();
         List<User> users = new ArrayList<>();
         users.add(anna);
         users.add(sergey);
         users.add(new Administrator(3, "Олег", "admin@helpdesk.ru"));
+        users.add(new SeniorSupportAgent(4, "Павел Кузнецов", "pavel@helpdesk.ru"));
 
         for (User user : users) {
             user.performAction();
