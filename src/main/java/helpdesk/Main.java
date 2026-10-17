@@ -4,6 +4,7 @@ import helpdesk.model.Administrator;
 import helpdesk.model.Customer;
 import helpdesk.model.SupportAgent;
 import helpdesk.model.Ticket;
+import helpdesk.model.TicketPriority;
 import helpdesk.model.User;
 import helpdesk.repository.TicketRepository;
 import helpdesk.service.ConsoleNotificationService;
@@ -22,8 +23,9 @@ public class Main {
         System.out.println("Клиент: " + anna.getName());
         System.out.println("Специалист: " + sergey.getName());
 
-        Ticket wifiTicket = new Ticket(1, "Не работает Wi-Fi", "Ноутбук не видит сеть в аудитории");
+        Ticket wifiTicket = new Ticket(1, "Не работает Wi-Fi", "Ноутбук не видит сеть в аудитории", TicketPriority.HIGH);
         System.out.println("Заявка: " + wifiTicket);
+        System.out.println("Приоритет: " + wifiTicket.getPriority());
 
         NotificationService notificationService = new ConsoleNotificationService();
         TicketService ticketService = new TicketService(notificationService);
@@ -37,13 +39,25 @@ public class Main {
 
         TicketRepository ticketRepository = new TicketRepository();
         ticketRepository.add(wifiTicket);
-        ticketRepository.add(new Ticket(2, "Ошибка приложения", "Приложение вылетает при открытии"));
-        ticketRepository.add(new Ticket(3, "Не печатает принтер", "Документы зависают в очереди печати"));
+        ticketRepository.add(new Ticket(2, "Ошибка приложения", "Приложение вылетает при открытии", TicketPriority.MEDIUM));
+        ticketRepository.add(new Ticket(3, "Не печатает принтер", "Документы зависают в очереди печати", TicketPriority.LOW));
 
         System.out.println();
         System.out.println("Все заявки:");
         for (Ticket item : ticketRepository.findAll()) {
             System.out.println(item);
+        }
+
+        System.out.println();
+        Ticket projectorTicket = new Ticket(4, "Не работает проектор", "В аудитории 305 нет изображения", TicketPriority.MEDIUM);
+        projectorTicket.cancel();
+        System.out.println(projectorTicket);
+        wifiTicket.cancel();
+
+        try {
+            new Ticket(5, "", "Заявка без названия", TicketPriority.LOW);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         System.out.println();

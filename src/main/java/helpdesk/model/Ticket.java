@@ -5,11 +5,16 @@ public class Ticket {
     private String title;
     private String description;
     private TicketStatus status;
+    private final TicketPriority priority;
 
-    public Ticket(long id, String title, String description) {
+    public Ticket(long id, String title, String description, TicketPriority priority) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ошибка: нельзя создать заявку без названия");
+        }
         this.id = id;
         this.title = title;
         this.description = description;
+        this.priority = priority;
         this.status = TicketStatus.NEW;
     }
 
@@ -27,6 +32,10 @@ public class Ticket {
 
     public TicketStatus getStatus() {
         return status;
+    }
+
+    public TicketPriority getPriority() {
+        return priority;
     }
 
     public void startProcessing() {
@@ -51,6 +60,14 @@ public class Ticket {
             return;
         }
         status = TicketStatus.CLOSED;
+    }
+
+    public void cancel() {
+        if (status == TicketStatus.CLOSED) {
+            System.out.println("Ошибка: заявка уже закрыта, отменить её нельзя");
+            return;
+        }
+        status = TicketStatus.CANCELLED;
     }
 
     @Override
